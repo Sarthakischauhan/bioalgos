@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'highlight.js/styles/monokai.css';
+body{
+  margin : 0;
+  width: 100%;
+  background: #eeece2;
+  color: #3d3929;
+}
