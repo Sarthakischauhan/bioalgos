@@ -20,6 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# SECURITY WARNING 2: secret key exposed because of the app running only locally right now. Change it before production
 SECRET_KEY = 'django-insecure-7x)&fj(4j7dxa%i$lmzwav#))7)yj2@vnco%_ic4f_1%1_f3+m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'algorithms', 
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'bioapp.urls'
@@ -71,6 +75,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bioapp.wsgi.application'
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+]
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
