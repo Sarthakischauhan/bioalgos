@@ -13,7 +13,7 @@ def transcribe_dna(request):
     
     mrna = "".join([MRNA_TABLE[nctide] for nctide in dna])
 
-    return Response({"mrna":mrna}, status=200)
+    return Response({"response":mrna}, status=200)
 
 # Translation Algorithm
 @api_view(['POST'])
@@ -31,7 +31,7 @@ def translate_mrna(request):
             if aa == "Stop":
                 break
             protein.append(aa)
-    return Response({"protein": "-".join(protein)})
+    return Response({"response": "-".join(protein)})
 
 # GC Content Algorithm
 @api_view(['POST'])
