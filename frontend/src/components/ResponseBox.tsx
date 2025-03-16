@@ -6,7 +6,6 @@ type responseBoxProps = {
 }
 
 function ResponseBox(props : responseBoxProps){
-    console.log(props.boxTitle);
     const response = props.response?.response;
     
     return (

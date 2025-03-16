@@ -22,7 +22,6 @@ function App() {
   }, []);
 
   const handleTranscriptionRun = async () => {
-    console.log(transcriptionInput)
     try{
       const response = await fetch("http://127.0.0.1:8000/api/transcribe/", {
         method: "POST", 
@@ -35,7 +34,6 @@ function App() {
         throw new Error(`Response status: ${response.status}`);
       }
       const data = await response.json()
-      console.log(data)
       setTranscriptionResult(data)
     }
     catch (error: any){
@@ -45,7 +43,6 @@ function App() {
 
 
   const handleTranslationRun = async () => {
-    console.log(translationInput)
     try{
       const response = await fetch("http://127.0.0.1:8000/api/translate/", {
         method: "POST", 
@@ -64,7 +61,6 @@ function App() {
       console.error(error.message);
     } 
   }
-  console.log({...ALGORITHM_CONTENT.transcription})
 
   return (
     <div className="max-w-[50rem] m-auto space-y-4 md:mt-[50px] mt-[30px] flex flex-col p-6 md:p-0 mb-[30px] md:mb-[40px]">

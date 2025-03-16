@@ -11,6 +11,8 @@ interface AlgorithmSectionProps {
   inputLabel?: string;
 }
 
+import ResponseBox from "./ResponseBox";
+
 const AlgorithmSection = ({
   title,
   description,
@@ -56,7 +58,7 @@ const AlgorithmSection = ({
       {result && (
         <ResponseBox 
           response={result} 
-          boxTitle={`Result for ${title} of ${inputValue.toUpperCase()} is`} 
+          boxTitle={`Result for ${title} is`} 
         />
       )}
     </>
