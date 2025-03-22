@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import hljs from 'highlight.js';
-import ResponseBox from './components/ResponseBox';
 import AlgorithmSection from './components/AlgorithmSection';
 import { ALGORITHM_CONTENT } from './content/algorithms'; 
 
 function App() {
   const codeRef1 = useRef(null);
-  const codeRef2 = useRef(null);
+  const codeRef2 = useRef(null); 
+  const codeRef3 = useRef(null);
   // State for input field
   const [transcriptionInput, setTranscriptionInput] = useState('');
   const [translationInput, setTranslationInput] = useState('');
@@ -14,11 +14,31 @@ function App() {
   // Result for transcriptiono
   const [transcriptionResult, setTranscriptionResult] = useState(null);
   const [translationResult, setTranslationResult] = useState(null);
+  const [nwAlignmentResult, setNwAlignmentResult] = useState(null);
+
+  const [seqeunceAlignmentInput, setSequenceAlignment] = useState({
+    sequence1 : '',
+    sequence2 : '', 
+  });
+
+
+  const updateSequence = (data:any) => {
+    const { name, value } = data
+    if (["sequence1", "sequence2"].includes(name)){
+      setSequenceAlignment(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+    }else{
+      console.log("Check the data you are updating seems wrong!",{name:value})
+    }
+  }
 
   // Highlight code block on mount
   useEffect(() => {
     if (codeRef1.current) hljs.highlightElement(codeRef1.current);
     if (codeRef2.current) hljs.highlightElement(codeRef2.current);
+    if (codeRef3.current) hljs.highlightElement(codeRef3.current);
   }, []);
 
   const handleTranscriptionRun = async () => {
@@ -74,6 +94,7 @@ function App() {
       <AlgorithmSection
         {...ALGORITHM_CONTENT.transcription}
         codeRef={codeRef1}
+        inputMode='single'
         inputValue={transcriptionInput}
         onInputChange={(e) => setTranscriptionInput(e.target.value)}
         onRun={handleTranscriptionRun}
@@ -83,10 +104,20 @@ function App() {
       <AlgorithmSection
         {...ALGORITHM_CONTENT.translation}
         codeRef={codeRef2}
+        inputMode="single"
         inputValue={translationInput}
         onInputChange={(e) => setTranslationInput(e.target.value)}
         onRun={handleTranslationRun}
         result={translationResult}
+      />
+      <AlgorithmSection
+        {...ALGORITHM_CONTENT.needlemanWunsch}
+        codeRef={codeRef3}
+        inputMode='multiple'
+        multipleInput={seqeunceAlignmentInput}
+        onMultipleInputChange ={updateSequence}
+        onRun={handleTranslationRun}
+        result={nwAlignmentResult}
       />
     </div>
   );
