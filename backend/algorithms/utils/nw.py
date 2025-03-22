@@ -94,9 +94,3 @@ def calculate_score(s1,s2):
                 match_string += "*"
             score -= 1
     return score, match_string
-
-score, match_string = calculate_score(new_s1, new_s2)
-
-print(f"The alignment score is {score}")
-print(f"Aligned sequence 1 is {new_s1} \nAligned sequence 2 is {new_s2}")
-print(f"Match string is {match_string}")
