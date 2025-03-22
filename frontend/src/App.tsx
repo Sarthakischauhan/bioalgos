@@ -10,16 +10,16 @@ function App() {
   // State for input field
   const [transcriptionInput, setTranscriptionInput] = useState('');
   const [translationInput, setTranslationInput] = useState('');
-
+  const [seqeunceAlignmentInput, setSequenceAlignment] = useState({
+    sequence1 : '',
+    sequence2 : '', 
+  });
   // Result for transcriptiono
   const [transcriptionResult, setTranscriptionResult] = useState(null);
   const [translationResult, setTranslationResult] = useState(null);
   const [nwAlignmentResult, setNwAlignmentResult] = useState(null);
 
-  const [seqeunceAlignmentInput, setSequenceAlignment] = useState({
-    sequence1 : '',
-    sequence2 : '', 
-  });
+
 
 
   const updateSequence = (data:any) => {
@@ -82,6 +82,26 @@ function App() {
     } 
   }
 
+  const handleNeedlemenRun = async () =>{
+    const body = {"sequence1":seqeunceAlignmentInput.sequence1, "sequence2":seqeunceAlignmentInput.sequence2}
+    try{
+      const response = await fetch("http://127.0.0.1:8000/api/needlemen-align/", {
+        method: "POST", 
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+      const data = await response.json()
+      setNwAlignmentResult(data);
+    }
+    catch (error: any){
+      console.error(error.message);
+    } 
+  }
   return (
     <div className="max-w-[50rem] m-auto space-y-4 md:mt-[50px] mt-[30px] flex flex-col p-6 md:p-0 mb-[30px] md:mb-[40px]">
       <h1 className="lg:text-[40px] text-4xl font-semibold sm:text-3xl text-gray-800 text-center">
@@ -116,7 +136,7 @@ function App() {
         inputMode='multiple'
         multipleInput={seqeunceAlignmentInput}
         onMultipleInputChange ={updateSequence}
-        onRun={handleTranslationRun}
+        onRun={handleNeedlemenRun}
         result={nwAlignmentResult}
       />
     </div>
